@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "cloudinary-asset-management": {
+      "url": "https://asset-management.mcp.cloudinary.com/mcp",
+      "oauthScopes": ["openid", "email", "offline_access", "asset_management", "upload"]
+    },
+    "cloudinary-environment-config": {
+      "url": "https://environment-config.mcp.cloudinary.com/mcp",
+      "oauthScopes": ["openid", "email", "offline_access", "asset_management"]
+    },
+    "cloudinary-structured-metadata": {
+      "url": "https://structured-metadata.mcp.cloudinary.com/mcp",
+      "oauthScopes": ["openid", "email", "offline_access", "asset_management"]
+    },
+    "cloudinary-analysis": {
+      "url": "https://analysis.mcp.cloudinary.com/sse",
+      "oauthScopes": ["openid", "email", "offline_access", "media_analysis", "query_analysis_tasks"]
+    }
+  }
+}
