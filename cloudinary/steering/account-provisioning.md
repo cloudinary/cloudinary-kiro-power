@@ -23,7 +23,16 @@ Field constraints: `email` required; `agent_framework` and `agent_llm_model` req
 
 A `200` response includes the new account's product environment with root `api_key` / `api_secret` and a `CLOUDINARY_URL` string, plus a `guidance` block.
 
-**Important:** these credentials are **inert** — the environment is created disabled and nothing works until the user completes Step 2. You generally do **not** need to store them: the preferred path after the claim is OAuth (Step 3). Surface the `guidance` text to the user.
+**Redact the credentials at the tool boundary.** The response contains a full-access root secret; anything you print lands in the chat transcript and possibly in logs. Unless the user has explicitly chosen the headless fallback (Step 3), strip the credentials before the response enters the conversation — e.g.:
+
+```sh
+curl -s -X POST https://api.cloudinary.com/v1_1/provisioning/agents/accounts \
+  -H 'Content-Type: application/json' -d @request.json \
+  | jq 'del(.product_environments[].api_key, .product_environments[].api_secret)
+        | del(.product_environments[].api_environment_variable)'
+```
+
+Never echo, display, or write the unredacted response to a file. These credentials are **inert** anyway — the environment is created disabled and nothing works until the user completes Step 2 — and the preferred path after the claim is OAuth (Step 3), which never needs them. Surface the `guidance` text to the user.
 
 ## Step 2 — Claim ceremony (email verification)
 

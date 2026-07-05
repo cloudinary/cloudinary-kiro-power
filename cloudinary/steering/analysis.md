@@ -4,7 +4,7 @@
 
 ## What the Analysis server offers
 
-The Analyze API runs AI models against an asset identified by `uri` (any public URL) or `asset_id` (an asset already in the Cloudinary account). Main analysis types:
+The Analyze API runs AI models against an asset identified by `uri` (any public URL) or `asset_id` (an asset already in the Cloudinary account). The MCP tools are named `analyze-<type>` with hyphens (e.g. `analyze-captioning`, `analyze-ai-vision-general`, `analyze-image-quality`), plus `tasks-get-status` for polling async tasks. Main analysis types:
 
 - **AI Vision (prompt-driven, most flexible):**
   - `ai_vision_general` — ask open-ended questions about an image ("what brand is this?", "describe the scene").
@@ -20,7 +20,7 @@ Decision guide: prefer `ai_vision_*` when the user's need is expressed in natura
 Analysis can run synchronously (result in the response) or asynchronously:
 
 1. Start the analysis with `async: true` (or when the tool defaults to async). You get back a `task_id` with status `pending`.
-2. Poll with the **`query_analysis_tasks`** capability (GET task by `task_id`) until status is `completed` or `failed`. Statuses: `pending` → `processing` → `completed` / `failed`.
+2. Poll with the **`tasks-get-status`** tool (pass the `task_id`) until status is `completed` or `failed`. Statuses: `pending` → `processing` → `completed` / `failed`.
 3. Alternatively pass a `notification_url` to receive a webhook on completion instead of polling.
 
 Rules:
@@ -64,4 +64,4 @@ Analysis results are returned to you — they are not automatically stored on th
 | Policy check on existing asset | `ai_vision_moderation` with yes/no questions |
 | Moderate all future uploads | Upload-time `moderation` parameter (add-on) — not this server |
 | Auto-tag at upload | Upload-time `detection` + `auto_tagging` threshold |
-| Check a running job | `query_analysis_tasks` with the `task_id` |
+| Check a running job | `tasks-get-status` with the `task_id` |

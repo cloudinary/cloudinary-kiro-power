@@ -15,21 +15,24 @@ A [Kiro power](https://kiro.dev/docs/powers/) that connects Kiro to [Cloudinary]
 ## Install
 
 1. Open Kiro → **Powers** panel → **Add Custom Power**
-2. **Import power from GitHub** and paste this repository's URL (or **Import power from a folder** if you cloned it)
+2. **Import power from GitHub** using this repository's `cloudinary/` folder URL (or **Import power from a folder** and select the `cloudinary/` directory if you cloned it)
 3. On first use, Kiro opens your browser to sign in to Cloudinary and choose a product environment
 
 ## Layout
 
 ```
 .
-├── POWER.md      ← power manifest: activation keywords, onboarding, steering routing
-├── mcp.json      ← the four remote Cloudinary MCP servers (OAuth)
-└── steering/
-    ├── upload.md
-    ├── transformations.md
-    ├── asset-management.md
-    ├── analysis.md
-    └── account-provisioning.md
+├── README.md
+├── LICENSE
+└── cloudinary/       ← the power; import this folder in Kiro
+    ├── POWER.md      ← power manifest: activation keywords, onboarding, steering routing
+    ├── mcp.json      ← the four remote Cloudinary MCP servers (OAuth)
+    └── steering/
+        ├── upload.md
+        ├── transformations.md
+        ├── asset-management.md
+        ├── analysis.md
+        └── account-provisioning.md
 ```
 
 ## Try it
