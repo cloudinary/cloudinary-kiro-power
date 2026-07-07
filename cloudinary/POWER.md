@@ -32,7 +32,7 @@ Check which Cloudinary tools are available:
 
 ### Step 2: Authenticate (existing account)
 
-Attempt `mcp_auth` on the `cloudinary-asset-management` server, or ask the user to approve the connection when Kiro prompts. The user's browser opens to sign in to Cloudinary, consent, and **select the product environment (cloud)** the tokens will act on.
+When Kiro connects to the `cloudinary-asset-management` server it opens the browser OAuth flow automatically — ask the user to complete it. (If it doesn't trigger, have the user connect/re-authenticate the server from Kiro's MCP panel, or run `/mcp auth`.) In the browser the user signs in to Cloudinary, consents, and **selects the product environment (cloud)** the tokens will act on.
 
 Notes:
 
@@ -100,7 +100,7 @@ Load the steering file that matches the user's task. Load more than one when the
 **Connection:** `https://environment-config.mcp.cloudinary.com/mcp` — OAuth (browser sign-in)
 **Covers:** product-environment configuration
 
-Tools follow a list/get/create/update/delete pattern for: **transformations** (named), **upload-presets**, **upload-mappings**, **triggers** (plus `test-trigger`), and **streaming-profiles** (e.g., `list-upload-presets`, `create-transformation`, `update-streaming-profile`).
+Tools follow a create/list/update/delete pattern for **transformations** (named), **upload-presets**, **upload-mappings**, **triggers**, and **streaming-profiles** (e.g., `create-transformation`, `list-upload-presets`, `update-streaming-profile`, `delete-upload-mapping`). The read/detail tools are not uniform: `get-transformation-details`, `get-upload-preset-details`, and `get-streaming-profile` — while upload-mappings and triggers have no `get`. Triggers also add `test-trigger`.
 
 ### cloudinary-structured-metadata
 
@@ -162,7 +162,7 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
 ### No Cloudinary tools available
 
 **Cause:** the MCP server isn't connected or authorized.
-**Solution:** attempt `mcp_auth` on the server, or have the user check Kiro's MCP panel and approve the connection. The browser sign-in must complete, including product-environment selection.
+**Solution:** have the user connect the server so Kiro opens the browser OAuth flow — from Kiro's MCP panel (connect / Re-authenticate) or via `/mcp auth`. The browser sign-in must complete, including product-environment selection.
 
 ### Authentication errors (401 / token expired)
 
