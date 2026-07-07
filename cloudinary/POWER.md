@@ -191,7 +191,9 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
 
 ## License and Support
 
-This power integrates with [Cloudinary](https://cloudinary.com).
+**License:** MIT (SPDX-License-Identifier: `MIT`) — see the `LICENSE` file at the repository root.
+
+This power integrates with [Cloudinary](https://cloudinary.com); the four MCP servers are operated by Cloudinary, so the links below cover both the power and the servers.
 
 - [Documentation](https://cloudinary.com/documentation)
 - [Support](https://support.cloudinary.com)
