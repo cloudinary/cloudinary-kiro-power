@@ -38,8 +38,7 @@ Append `q_auto/f_auto` (or `q_auto,f_auto` as the final component) to **every** 
 | `c_fill` | Scale + crop to exactly fill w×h | Fixed-size slots (cards, heroes); pair with `g_auto` |
 | `c_lfill` | Like fill, but never upscales | Fill without quality loss on small originals |
 | `c_fit` | Scale to fit within w×h, no crop | Whole image must be visible; container tolerates letterbox |
-| `c_lfit` | Like fit, but never upscales | Responsive max-size delivery |
-| `c_limit` | Alias behavior of lfit: shrink only if larger | Capping dimensions safely — good default for user content |
+| `c_limit` | Like fit, but only scales down — never upscales | Responsive max-size delivery; capping dimensions safely — good default for user content |
 | `c_scale` | Force to w×h (or one dim, other auto) | Simple resizing; may distort if both dims given |
 | `c_crop` | Extract region, no scaling | Cutting a region at original resolution |
 | `c_thumb` | Crop toward detected face(s), then scale | Avatars/profile photos; use with `g_face` and optional `z_` zoom |
@@ -109,7 +108,7 @@ These count against quota at a **higher special rate** than standard transformat
 4. **Fixed quality with `f_auto`.** `q_80,f_auto` locks quality tuned for one format; use `q_auto,f_auto`.
 5. **Changing public_id casing or extension.** IDs are case-sensitive; `Sample.jpg` ≠ `sample.jpg`. Don't append an extension you haven't verified — with `f_auto` omit it.
 6. **Forgetting URL encoding** in text overlays and gen-AI prompts (spaces, commas, slashes).
-7. **Upscaling small originals** with `c_fill`/`c_scale` — use `c_limit`/`c_lfill`/`c_lfit` when the source size is unknown.
+7. **Upscaling small originals** with `c_fill`/`c_scale` — use `c_limit`/`c_lfill` when the source size is unknown.
 8. **CSS-only resizing** — shipping a 4000px original into a 300px slot; always resize in the URL.
 9. **`f_auto` inside a named transformation** — it won't negotiate formats there; keep it in the delivery URL.
 10. **Unbounded gen-AI usage** — generative transforms are billed at a premium; cache/eagerly generate rather than composing unique prompts per request.

@@ -30,7 +30,7 @@ For Python: `cloudinary.uploader.upload(file, **options)` with the same option n
 ## public_id: explicit vs. auto-generated
 
 - If you omit `public_id`, Cloudinary assigns a random ID (e.g. `8jsb1xofxdqamu2rzwt9q`). Fine for user-generated content; bad for assets referenced by predictable URLs.
-- Set an explicit `public_id` when the app or user needs stable, readable delivery URLs. Rules: max 255 chars, no leading/trailing space or `/`, no `? & # \ % < >`. Omit the file extension for image/video; **include** it for `raw`.
+- Set an explicit `public_id` when the app or user needs stable, readable delivery URLs. Rules: max 255 chars, no leading/trailing space or `/`, no `? & # \ % < > +`. Omit the file extension for image/video; **include** it for `raw`.
 - `use_filename: true` derives the public_id from the uploaded filename. Combined with:
   - `unique_filename: true` (default) → filename + random suffix (collision-safe).
   - `unique_filename: false` → exact normalized filename (predictable, but can collide).
@@ -38,7 +38,8 @@ For Python: `cloudinary.uploader.upload(file, **options)` with the same option n
 
 ## Overwrite behavior
 
-- Default is effectively "don't clobber": uploading with an existing public_id only replaces the asset if `overwrite: true`.
+- For **signed** (server-side) uploads, `overwrite` defaults to `true` — uploading with an existing public_id **replaces** the asset unless you pass `overwrite: false`. Set it explicitly when you want collision protection. (Note: `unique_filename: true` — the default with `use_filename` — sidesteps this by generating a unique ID, which is why uploads often don't appear to clobber.)
+- For **unsigned** uploads, `overwrite` defaults to `false` and cannot be set to `true`.
 - Overwriting may clear existing tags, context, and structured metadata — re-send them in the same call if they must survive.
 - After overwriting, add `invalidate: true` to purge cached CDN copies (propagation takes seconds to minutes).
 

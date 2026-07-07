@@ -10,7 +10,7 @@ author: "Cloudinary"
 
 ## Overview
 
-Connect Kiro to Cloudinary — the media platform for uploading, storing, transforming, optimizing, and delivering images and videos. This power wires up Cloudinary's four remote MCP servers and provides steering for the most common media workflows.
+Connect Kiro to Cloudinary — the media platform for uploading, storing, transforming, optimizing, and delivering images and videos. This power wires up four of Cloudinary's remote MCP servers and provides steering for the most common media workflows.
 
 **Key capabilities:**
 
@@ -36,7 +36,7 @@ Attempt `mcp_auth` on the `cloudinary-asset-management` server, or ask the user 
 
 Notes:
 
-- Tokens are scoped and short-lived and refresh automatically. They authenticate **MCP calls only** — they cannot be used against Cloudinary's REST APIs directly.
+- Authentication is handled by the OAuth flow — you never paste or handle raw API keys. (Cloudinary's non-Analysis MCP servers also accept API-key authentication via `CLOUDINARY_URL`/header credentials, but this power standardizes on OAuth so no secrets enter the config.)
 - Each of the four servers requires its own one-time consent. Authorize `cloudinary-asset-management` now; authorize the others when a workflow first needs them rather than all upfront.
 - The product environment was chosen at consent time. If assets seem missing, the user may have selected a different environment — re-authorize to switch.
 
@@ -167,7 +167,7 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
 ### Authentication errors (401 / token expired)
 
 **Cause:** the OAuth session behind the grant ended (e.g., the user signed out of Cloudinary).
-**Solution:** re-authenticate the server. Tokens are short-lived by design and normally refresh automatically.
+**Solution:** re-authenticate the server; completing the OAuth sign-in again re-establishes the grant.
 
 ### Assets the user expects are missing
 
@@ -181,19 +181,19 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
 
 ### Need direct REST API access
 
-**Cause:** MCP tokens work only against the MCP servers, not `https://api.cloudinary.com/...`.
+**Cause:** the MCP servers cover agent-driven operations on the account, not your application's runtime traffic.
 **Solution:** for application code, use a Cloudinary SDK with credentials the user copies from their Console. Don't route app runtime traffic through MCP.
 
-### Provisioning returns 400 "email has already been taken"
+### Provisioning returns 400 (account already exists)
 
-**Cause:** the user already has a Cloudinary account.
+**Cause:** a Cloudinary account already exists for that email.
 **Solution:** skip provisioning; authenticate via OAuth (Onboarding Step 2).
 
 ## License and Support
 
 **License:** MIT (SPDX-License-Identifier: `MIT`) — see the `LICENSE` file at the repository root.
 
-This power integrates with [Cloudinary](https://cloudinary.com); the four MCP servers are operated by Cloudinary, so the links below cover both the power and the servers.
+This power integrates with [Cloudinary](https://cloudinary.com); these MCP servers are operated by Cloudinary, so the links below cover both the power and the servers.
 
 - [Documentation](https://cloudinary.com/documentation)
 - [Support](https://support.cloudinary.com)

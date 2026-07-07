@@ -4,7 +4,7 @@ A [Kiro power](https://kiro.dev/docs/powers/) that connects Kiro to [Cloudinary]
 
 ## What it does
 
-- Wires up Cloudinary's four remote MCP servers over **OAuth** (browser sign-in, no API keys pasted into config):
+- Wires up four of Cloudinary's remote MCP servers over **OAuth** (browser sign-in, no API keys pasted into config):
   - **Asset management** — upload assets and manage your media library (Upload + Admin API capabilities)
   - **Environment config** — upload presets, named transformations, streaming profiles, webhooks
   - **Structured metadata** — define and manage metadata fields
@@ -26,7 +26,7 @@ A [Kiro power](https://kiro.dev/docs/powers/) that connects Kiro to [Cloudinary]
 ├── LICENSE
 └── cloudinary/       ← the power; import this folder in Kiro
     ├── POWER.md      ← power manifest: activation keywords, onboarding, steering routing
-    ├── mcp.json      ← the four remote Cloudinary MCP servers (OAuth)
+    ├── mcp.json      ← four remote Cloudinary MCP servers (OAuth)
     └── steering/
         ├── upload.md
         ├── transformations.md

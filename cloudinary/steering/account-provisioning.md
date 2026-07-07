@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 ```
 
-Field constraints: `email` required; `agent_framework` and `agent_llm_model` required, 2–100 chars; `agent_goal` required, 2–300 chars; `sdk_framework` optional, 2–100 chars.
+Field constraints: `email` required (must be a valid address and **not** a disposable-email provider); `agent_framework` and `agent_llm_model` required, 2–100 chars; `agent_goal` required, 2–300 chars; `sdk_framework` optional, 2–100 chars.
 
 A `200` response includes the new account's product environment with root `api_key` / `api_secret` and a `CLOUDINARY_URL` string, plus a `guidance` block.
 
@@ -49,18 +49,14 @@ There is **no pollable completion signal** for the claim. The user completing th
 
 Once the user has claimed the account, return to the power's onboarding Step 2: connect the `cloudinary-*` MCP servers. The user signs in with the password they just set and selects the product environment. You receive scoped, short-lived tokens and never handle the root secret.
 
-**Fallback — root credentials.** Only if the user explicitly needs direct REST API access beyond what the MCP servers expose (MCP tokens do not work against `https://api.cloudinary.com/...`), the root `api_key`/`api_secret` from Step 1 can be used with HTTP Basic auth or via `CLOUDINARY_URL` in an SDK. Treat the secret as full-access and long-lived: never log it, never put it in client-side code, and have the user store it in their own secrets manager. Prefer OAuth for everything else.
+**Fallback — root credentials.** Only if the user explicitly needs direct REST API access beyond what the MCP servers expose, the root `api_key`/`api_secret` from Step 1 can be used with HTTP Basic auth or via `CLOUDINARY_URL` in an SDK. Treat the secret as full-access and long-lived: never log it, never put it in client-side code, and have the user store it in their own secrets manager. Prefer OAuth for everything else.
 
 ## Errors
 
-Cloudinary's standard error envelope: `{ "error": { "category", "message", "code?", "details?" } }`. `code` is optional — the validation and duplicate-email 400s carry only `category` + `message`.
+Cloudinary returns an error envelope of the form `{ "error": { "category", "message" } }` (observed `category`: `user_error`). The documented failure conditions are:
 
 | Status | Meaning | What to do |
 | --- | --- | --- |
-| 400 (validation) | Missing/oversized field or invalid UTF-8 | Fix the request body. |
-| 400 (email taken) | Message contains `{"email":["has already been taken"]}` | The user already has an account — don't retry; connect via OAuth instead. |
-| 403 `agent_registration_disabled` | Agent signup temporarily off | Don't retry tightly; ask the user to sign up at cloudinary.com themselves. |
-| 403 `geo_location_not_permitted` | Region not allowed | Inform the user; do not retry. |
-| 403 (generic "Invalid request") | Request blocked (e.g., IP gating) | Do not probe further. |
-| 429 `ip_rate_limit_exceeded` | Per-IP signup cap (default 10/day) | Back off; retry later. |
-| 5xx | Transient | Retry with exponential backoff. |
+| 400 | A required parameter is missing, the email format is invalid, the email domain is a disposable-email provider, or an account already exists for the email. | Read the message. If an account already exists, don't retry — connect via OAuth instead (Onboarding Step 2). Otherwise fix the request body. |
+| 403 | Cloudinary's abuse controls blocked the request. The message is **intentionally generic** (e.g., IP or region gating), so don't infer a specific cause. | Don't probe or retry tightly; if it persists, ask the user to sign up at cloudinary.com themselves. |
+| 429 | Too many account-creation requests from the same IP address. | Back off and retry later. |
