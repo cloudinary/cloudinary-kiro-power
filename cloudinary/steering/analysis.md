@@ -65,3 +65,11 @@ Analysis results are returned to you — they are not automatically stored on th
 | Moderate all future uploads | Upload-time `moderation` parameter (add-on) — not this server |
 | Auto-tag at upload | Upload-time `detection` + `auto_tagging` threshold |
 | Check a running job | `tasks-get-status` with the `task_id` |
+
+## Further reference
+
+The model catalog, add-on requirements, and quota specifics change as Cloudinary adds capabilities — verify before large jobs:
+
+- [Analyze API](https://cloudinary.com/documentation/analyze_api) — current model list, parameters, and response shapes.
+- [AI Content Analysis add-on](https://cloudinary.com/documentation/cloudinary_ai_content_analysis_addon) and the [add-ons catalog](https://cloudinary.com/documentation/cloudinary_add_ons) — which subscription each model requires.
+- [`llms.txt`](https://cloudinary.com/documentation/llms.txt) — index to the rest of the docs when you need to go deeper.

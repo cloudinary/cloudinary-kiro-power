@@ -60,3 +60,7 @@ Cloudinary returns an error envelope of the form `{ "error": { "category", "mess
 | 400 | A required parameter is missing, the email format is invalid, the email domain is a disposable-email provider, or an account already exists for the email. | Read the message. If an account already exists, don't retry — connect via OAuth instead (Onboarding Step 2). Otherwise fix the request body. |
 | 403 | Cloudinary's abuse controls blocked the request. The message is **intentionally generic** (e.g., IP or region gating), so don't infer a specific cause. | Don't probe or retry tightly; if it persists, ask the user to sign up at cloudinary.com themselves. |
 | 429 | Too many account-creation requests from the same IP address. | Back off and retry later. |
+
+## Further reference
+
+The endpoint contract above is the authority for this flow. For the surrounding account/OAuth concepts, see [`llms.txt`](https://cloudinary.com/documentation/llms.txt); if the provisioning endpoint's field constraints or error envelope appear to have changed, trust the live API response over this file.

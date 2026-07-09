@@ -73,3 +73,11 @@ Determine the environment's folder mode before moving assets — behavior differ
 - Check `X-FeatureRateLimit-Remaining` / `X-FeatureRateLimit-Reset` headers when doing bulk work; batch operations (delete by tag/prefix, bulk tag updates) instead of looping per-asset calls.
 - Never poll listings in a loop to "watch" for changes — recommend webhooks instead.
 - For destructive or URL-breaking operations (bulk delete, rename in fixed folder mode, editing a shared named transformation or preset), summarize the blast radius and get user confirmation first.
+
+## Further reference
+
+Search field names, rate-limit numbers, and metadata/config options evolve — confirm against the docs before relying on specifics:
+
+- [Search API](https://cloudinary.com/documentation/search_api) — full expression syntax and queryable fields.
+- [Admin API reference](https://cloudinary.com/documentation/admin_api) and [Structured metadata](https://cloudinary.com/documentation/structured_metadata) — current limits, field types, and config options.
+- [`llms.txt`](https://cloudinary.com/documentation/llms.txt) — index to the rest of the docs when you need to go deeper.

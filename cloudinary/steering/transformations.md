@@ -112,3 +112,11 @@ These count against quota at a **higher special rate** than standard transformat
 8. **CSS-only resizing** — shipping a 4000px original into a 300px slot; always resize in the URL.
 9. **`f_auto` inside a named transformation** — it won't negotiate formats there; keep it in the delivery URL.
 10. **Unbounded gen-AI usage** — generative transforms are billed at a premium; cache/eagerly generate rather than composing unique prompts per request.
+
+## Further reference
+
+The syntax and gotchas above are stable, but the full parameter catalog and premium/credit specifics change. For authoritative, current detail:
+
+- **`get-tx-reference`** (asset-management MCP server) — official transformation syntax reference; pull it once per session before composing non-trivial URLs.
+- [Transformation reference](https://cloudinary.com/documentation/transformation_reference) and [Generative AI transformations](https://cloudinary.com/documentation/generative_ai_transformations) — full parameter lists, current limits, and credit rates.
+- [`llms.txt`](https://cloudinary.com/documentation/llms.txt) — index to the rest of the docs when you need to go deeper.

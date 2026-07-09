@@ -21,6 +21,15 @@ Connect Kiro to Cloudinary — the media platform for uploading, storing, transf
 - **OAuth authentication**: no API keys pasted into config — the user signs in to Cloudinary in a browser and selects a product environment
 - **Agentic account provisioning**: users without a Cloudinary account can have one created from their email, claimed via email verification
 
+## Staying current
+
+The steering files carry curated defaults and judgment, but version-sensitive specifics (rate limits, add-on catalogs, exact size/duration limits, new transformation parameters) drift. Treat Cloudinary's docs as the source of truth:
+
+- **[`https://cloudinary.com/documentation/llms.txt`](https://cloudinary.com/documentation/llms.txt)** — the machine-readable index of Cloudinary's documentation. Fetch it (and the specific pages it links) whenever you need to confirm current behavior or go beyond the steering content.
+- **`get-tx-reference`** (asset-management server) — loads the official transformation syntax reference; pull it once per session before composing non-trivial transformation URLs.
+
+Each steering file ends with a **Further reference** pointer to the most relevant doc section.
+
 ## Onboarding
 
 ### Step 1: Check connection state

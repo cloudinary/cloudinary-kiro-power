@@ -96,3 +96,10 @@ Set these in the upload call rather than with follow-up API calls — it's atomi
 3. Fixed vs dynamic folder mode → `public_id` path vs `asset_folder`.
 4. Attach tags/context/metadata in the same call.
 5. Video or >100 MB → chunked upload, explicit `resource_type`, consider eager async + notification_url.
+
+## Further reference
+
+Size limits, default preset behavior, and the full option list are version- and plan-sensitive — verify current values rather than trusting the numbers above:
+
+- [Upload API reference](https://cloudinary.com/documentation/image_upload_api_reference) and [Upload guide](https://cloudinary.com/documentation/upload_images) — complete parameter list, limits, and preset behavior.
+- [`llms.txt`](https://cloudinary.com/documentation/llms.txt) — index to the rest of the docs when you need to go deeper.
