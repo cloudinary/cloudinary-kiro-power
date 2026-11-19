@@ -10,7 +10,7 @@ author: "Cloudinary"
 
 ## Overview
 
-Connect Kiro to Cloudinary — the media platform for uploading, storing, transforming, optimizing, and delivering images and videos. This power wires up four of Cloudinary's remote MCP servers and provides steering for the most common media workflows.
+Connect Kiro to Cloudinary — the media platform for uploading, storing, transforming, optimizing, and delivering images and videos. This power wires up five of Cloudinary's remote MCP servers and provides steering for the most common media workflows.
 
 **Key capabilities:**
 
@@ -18,6 +18,7 @@ Connect Kiro to Cloudinary — the media platform for uploading, storing, transf
 - **Transform and optimize**: build delivery URLs with resizing, cropping, overlays, `f_auto`/`q_auto` optimization, and generative AI edits
 - **Configure the environment**: upload presets, named transformations, streaming profiles, triggers
 - **AI media analysis**: auto-tagging, captioning, moderation, object detection, quality scoring
+- **Video**: live streams, image-to-video generation, visual transcripts of videos, Video Canvas applets
 - **OAuth authentication**: no API keys pasted into config — the user signs in to Cloudinary in a browser and selects a product environment
 - **Agentic account provisioning**: users without a Cloudinary account can have one created from their email, claimed via email verification
 
@@ -46,7 +47,7 @@ When Kiro connects to the `cloudinary-asset-management` server it opens the brow
 Notes:
 
 - Authentication is handled by the OAuth flow — you never paste or handle raw API keys. (Cloudinary's non-Analysis MCP servers also accept API-key authentication via `CLOUDINARY_URL`/header credentials, but this power standardizes on OAuth so no secrets enter the config.)
-- Each of the four servers requires its own one-time consent. Authorize `cloudinary-asset-management` now; authorize the others when a workflow first needs them rather than all upfront.
+- Each of the five servers requires its own one-time consent. Authorize `cloudinary-asset-management` now; authorize the others when a workflow first needs them rather than all upfront.
 - The product environment was chosen at consent time. If assets seem missing, the user may have selected a different environment — re-authorize to switch.
 
 ### Step 2b: Provision a new account (no Cloudinary account yet)
@@ -137,6 +138,23 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
 | `analyze-watermark-detection` | Detect watermarks |
 | `tasks-get-status` | Check status of an async analysis task |
 
+### cloudinary-video
+
+**Connection:** `https://video.mcp.cloudinary.com/mcp` — OAuth (browser sign-in)
+**Covers:** live streaming, image-to-video, AI video analysis, Video Canvas
+
+| Tool | Purpose |
+|------|---------|
+| `create-live-stream` / `list-live-streams` / `get-live-stream` / `update-live-stream` / `delete-live-stream` | RTMP live stream management |
+| `activate-live-stream` / `idle-live-stream` | Switch a stream on or off manually |
+| `create-live-stream-output` / `list-live-stream-outputs` / `get-live-stream-output` / `update-live-stream-output` / `delete-live-stream-output` | Stream outputs (HLS and archive are created with the stream; add simulcast outputs to YouTube or Facebook) |
+| `generate-video-from-image` / `get-video-generation-job` | Generate a video from an image and poll the job (Image to Video add-on, Beta) |
+| `create-image-to-video-prompt` / `list-image-to-video-prompts` / `get-image-to-video-prompt` / `update-image-to-video-prompt` / `delete-image-to-video-prompt` | Saved, reusable image-to-video prompts |
+| `analyze-video` / `get-video-analysis-job` | Timestamped visual transcript of a stored video, and poll the job (Beta) |
+| `create-canvas-applet` / `list-canvas-applets` / `get-canvas-applet` / `replace-canvas-applet` / `delete-canvas-applet` | Video Canvas applets, saved as named transformations |
+
+A stream must be idle to add or change outputs. `replace-canvas-applet` overwrites the whole applet, so read it with `get-canvas-applet` first.
+
 ## MCP Configuration
 
 ```json
@@ -153,6 +171,9 @@ Tools follow the same CRUD pattern for **metadata-fields** (`create-metadata-fie
     },
     "cloudinary-analysis": {
       "url": "https://analysis.mcp.cloudinary.com/sse"
+    },
+    "cloudinary-video": {
+      "url": "https://video.mcp.cloudinary.com/mcp"
     }
   }
 }

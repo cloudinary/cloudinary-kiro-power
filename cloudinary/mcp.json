@@ -11,6 +11,9 @@
     },
     "cloudinary-analysis": {
       "url": "https://analysis.mcp.cloudinary.com/sse"
+    },
+    "cloudinary-video": {
+      "url": "https://video.mcp.cloudinary.com/mcp"
     }
   }
 }
